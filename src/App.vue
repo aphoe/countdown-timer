@@ -18,7 +18,7 @@ let intervalId = null
 // Fetch current time from server based on user's timezone
 const fetchServerTime = async () => {
   try {
-    const apiUrl = `/api/?timezone=${userTimezone}`
+    const apiUrl = `https://aphoe.com/time.php?timezone=${userTimezone}`
     console.log(apiUrl, userTimezone)
     const response = await fetch(apiUrl)
     const data = await response.json()
