@@ -198,15 +198,15 @@ onUnmounted(() => {
     <canvas ref="canvasRef" class="absolute inset-0"></canvas>
     
     <!-- Celebration Text Overlay -->
-    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-      <div class="text-center space-y-6 animate-pulse-text">
-        <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white celebration-text font-display tracking-tighter">
+    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-4">
+      <div class="text-center space-y-3 sm:space-y-4 md:space-y-6 animate-pulse-text">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white celebration-text font-display tracking-tighter">
           Happy New Year!
         </h1>
-        <p class="text-3xl sm:text-4xl md:text-5xl font-semibold text-white/90 celebration-subtext font-display">
+        <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white/90 celebration-subtext font-display">
           Welcome to 2026
         </p>
-        <div class="text-6xl mt-8">
+        <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-4 sm:mt-6 md:mt-8">
           🎉🎊🥳🎆✨
         </div>
       </div>
