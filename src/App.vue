@@ -62,6 +62,29 @@ const timeLeft = computed(() => {
 
 const padNumber = (num) => String(num).padStart(2, '0')
 
+// Computed properties for showing/hiding leading zero units
+const showDays = computed(() => timeLeft.value.days > 0)
+const showHours = computed(() => timeLeft.value.days > 0 || timeLeft.value.hours > 0)
+const showMinutes = computed(() => timeLeft.value.days > 0 || timeLeft.value.hours > 0 || timeLeft.value.minutes > 0)
+
+// Count visible cards to determine grid columns
+const visibleCardCount = computed(() => {
+  let count = 1 // Seconds always visible
+  if (showMinutes.value) count++
+  if (showHours.value) count++
+  if (showDays.value) count++
+  return count
+})
+
+const gridColsClass = computed(() => {
+  switch (visibleCardCount.value) {
+    case 1: return 'grid-cols-1'
+    case 2: return 'grid-cols-2'
+    case 3: return 'grid-cols-3'
+    default: return 'grid-cols-4'
+  }
+})
+
 const toggleDarkMode = () => {
   isDarkMode.value = !isDarkMode.value
   document.documentElement.classList.toggle('dark', isDarkMode.value)
@@ -129,9 +152,9 @@ onUnmounted(() => {
 
       <!-- Full Width Timer Grid -->
       <div class="w-full max-w-6xl px-2 sm:px-4">
-        <div class="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+        <div :class="['grid gap-2 sm:gap-3 md:gap-4 lg:gap-6', gridColsClass]">
           <!-- Days -->
-          <div class="timer-card group relative flex flex-col items-center justify-center aspect-square p-2 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl md:rounded-3xl shadow-xl sm:shadow-2xl transition-all duration-300 box-glow"
+          <div v-if="showDays" class="timer-card group relative flex flex-col items-center justify-center aspect-square p-2 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl md:rounded-3xl shadow-xl sm:shadow-2xl transition-all duration-300 box-glow"
                :class="isDarkMode ? 'bg-surface-dark border border-white/5 hover:border-primary/50' : 'bg-white border border-gray-200 hover:border-primary/50'">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent rounded-xl sm:rounded-2xl md:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tabular-nums tracking-tight group-hover:text-primary transition-colors duration-300"
@@ -143,7 +166,7 @@ onUnmounted(() => {
           </div>
 
           <!-- Hours -->
-          <div class="timer-card group relative flex flex-col items-center justify-center aspect-square p-2 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl md:rounded-3xl shadow-xl sm:shadow-2xl transition-all duration-300 box-glow"
+          <div v-if="showHours" class="timer-card group relative flex flex-col items-center justify-center aspect-square p-2 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl md:rounded-3xl shadow-xl sm:shadow-2xl transition-all duration-300 box-glow"
                :class="isDarkMode ? 'bg-surface-dark border border-white/5 hover:border-primary/50' : 'bg-white border border-gray-200 hover:border-primary/50'">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent rounded-xl sm:rounded-2xl md:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tabular-nums tracking-tight group-hover:text-primary transition-colors duration-300"
@@ -155,7 +178,7 @@ onUnmounted(() => {
           </div>
 
           <!-- Minutes -->
-          <div class="timer-card group relative flex flex-col items-center justify-center aspect-square p-2 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl md:rounded-3xl shadow-xl sm:shadow-2xl transition-all duration-300 box-glow"
+          <div v-if="showMinutes" class="timer-card group relative flex flex-col items-center justify-center aspect-square p-2 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl md:rounded-3xl shadow-xl sm:shadow-2xl transition-all duration-300 box-glow"
                :class="isDarkMode ? 'bg-surface-dark border border-white/5 hover:border-primary/50' : 'bg-white border border-gray-200 hover:border-primary/50'">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent rounded-xl sm:rounded-2xl md:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tabular-nums tracking-tight group-hover:text-primary transition-colors duration-300"
